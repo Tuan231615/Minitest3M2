@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Main {
     public static void main(String[] args) {
         Book[] book = new Book[10];
@@ -11,40 +13,51 @@ public class Main {
         book[7] = new ProgrammingBook(8, "Khoa học chưa chắc đã vui", 500, "Chịnh Văn Triệu", "Java", "Laravel Framework");
         book[8] = new ProgrammingBook(9, "Khoa học chưa chắc đã không vui vui", 500, "Chịnh Văn Lực", "python", "Spring Framework");
         book[9] = new ProgrammingBook(10, "Khoa học vui lắm", 500, "Chịnh Văn Hoàng", "C++", "Node.js");
-        for (int i = 0; i < book.length; i++) {
-            System.out.println(book[i]);
+        for (Book value : book) {
+            System.out.println(value);
         }
         System.out.println("Tong tien 10 cuon sach: " + getSum(book));
+        System.out.println("So sach co cagetory vien tuong 1: " + getVienTuong1(book));
+        System.out.println("So sach co language la java: " + getJava(book));
+        System.out.println("So sach fiction co gia nho hon 100 la: " + getFictionNhoHon100(book));
+    }
 
-        for (int i = 0; i < book.length; i++) {
-            if(book[i] instanceof FictionBook){
-                if(book[i].getPrice() < 100)
-                System.out.println(" sach vien tuong co gia nho hon 100: " +book[i].getName());
-            }
+    public static double getSum(Book[] book) {
+        double total = 0;
+        for (Book i : book) {
+            total += i.getPrice();
         }
-        double total= 0;
-        for (int i = 0; i < book.length; i++) {
-            if(book[i] instanceof FictionBook){
-                if(((FictionBook) book[i]).getCategory() == "Viễn tưởng 1"){
-                    total ++;
+        return total;
+    }
+
+    public static int getJava(Book[] book) {
+        int a = 0;
+        for (Book value : book) {
+            if (value instanceof ProgrammingBook)
+                if (Objects.equals(((ProgrammingBook) value).getLanguage(), "Java")) {
+                    a++;
+                }
+        }
+        return a;
+    }
+
+    public static double getVienTuong1(Book[] book) {
+        double total = 0;
+        for (Book value : book) {
+            if (value instanceof FictionBook) {
+                if (Objects.equals(((FictionBook) value).getCategory(), "Viễn tưởng 1")) {
+                    total++;
                 }
             }
-
         }
-        System.out.println("So sach co cagetory vien tuong 1: " + total);
-        int a = 0;
-        for (int i = 0; i < book.length; i++) {
-            if (book[i] instanceof ProgrammingBook)
-            if (((ProgrammingBook) book[i]).getLanguage() == "Java"){
-                a++;
-            }
-        }
-        System.out.println("So sach co language la java: " + a);
+        return total;
     }
-    public static double getSum(Book[] book) {
-            double total = 0;
-        for (Book i: book) {
-            total += i.getPrice();
+    public static double getFictionNhoHon100(Book[] book) {
+        double total = 0;
+        for (Book value : book) {
+            if (value.getPrice() < 100) {
+                total++;
+            }
         }
         return total;
     }
